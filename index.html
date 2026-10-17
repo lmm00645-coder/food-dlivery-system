@@ -1,46 +1,72 @@
 <!DOCTYPE html><html lang="zh-HK"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fast Fax Food 管理後台</title><style>
-*{box-sizing:border-box;margin:0}body{font-family:system-ui,"PingFang HK",sans-serif;background:#14213d;color:#fff}
-@keyframes up{from{opacity:0;transform:translateY(16px)}}@keyframes fl{50%{transform:translateY(-12px)}}
-#lg{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}#lg b{font-size:64px;animation:fl 2s infinite}
-input{padding:12px;border-radius:10px;border:0;width:240px}
-button{border:0;border-radius:10px;background:#ffc700;color:#14213d;padding:8px 13px;font-weight:800;cursor:pointer;transition:.15s;margin:2px}button:active{transform:scale(.9)}
-nav{display:flex;gap:6px;padding:12px;background:#0d1530;position:sticky;top:0;align-items:center;flex-wrap:wrap}nav h3{flex:1}nav button{background:#26365f;color:#fff}nav button.on{background:#e8312f}
-.w{max-width:900px;margin:auto;padding:14px}.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-.c{background:#1f2f57;border-radius:14px;padding:14px;margin:8px 0;animation:up .4s both}.c big{display:block;font-size:30px;font-weight:900;color:#ffc700}
-.bar{height:10px;border-radius:5px;background:#ffc700;width:0;transition:width 1s;margin-top:6px}.t{padding:2px 8px;border-radius:8px;background:#e8312f;font-size:12px}
+*{box-sizing:border-box;margin:0}:root{--r:#e63946;--k:#14181f;--m:#6b7280;--b:#f3f5f7;--l:#e2e6ea}
+body{font-family:system-ui,"PingFang HK","Noto Sans TC",sans-serif;background:var(--b);color:var(--k)}
+button{border:0;font:inherit;cursor:pointer;border-radius:12px;padding:9px 15px;font-weight:700;background:var(--k);color:#fff;transition:.2s;margin:2px}button:hover{transform:translateY(-1px);box-shadow:0 6px 16px #0003}button:active{transform:scale(.94)}
+.g2{background:#fff;color:var(--k);border:1px solid var(--l)}.rd{background:var(--r)}
+input{width:100%;padding:12px;margin:5px 0 10px;border:1px solid var(--l);border-radius:12px;font:inherit;transition:.2s}input:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 4px #e6394622}
+label{font-size:13px;color:var(--m)}
+@keyframes fi{from{opacity:0}}@keyframes up{from{opacity:0;transform:translateY(20px)}}@keyframes ts{0%{opacity:0;top:-30px}10%,88%{opacity:1;top:16px}100%{opacity:0;top:-30px}}@keyframes pu{0%{box-shadow:0 0 0 0 #e6394688}100%{box-shadow:0 0 0 14px #e6394600}}@keyframes fl{0%{background:#fff3c4}}
+.toast{position:fixed;left:50%;transform:translateX(-50%);background:var(--k);color:#fff;padding:12px 20px;border-radius:99px;z-index:30;animation:ts 3.2s both;font-weight:600}
+.md{position:fixed;inset:0;background:#0007;display:flex;align-items:center;justify-content:center;z-index:20;animation:fi .2s}.md>div{background:#fff;padding:22px;border-radius:20px;width:92%;max-width:400px;animation:up .35s cubic-bezier(.2,1.2,.4,1)}.row{display:flex;gap:8px;justify-content:flex-end}
+.av{display:grid;place-items:center;color:#fff;font-weight:800;border-radius:12px;flex:none}
+#lg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--k)}#lg form{width:100%;max-width:320px;color:#fff;animation:up .6s both}#lg h1{margin:8px 0 4px}#lg p{opacity:.6;margin-bottom:22px}#lg button{width:100%;margin:0}
+.mk{width:52px;height:52px;border-radius:16px;background:var(--r);display:grid;place-items:center;font-weight:900;animation:pu 2s infinite}
+nav{display:flex;gap:6px;padding:12px 16px;background:#fff;border-bottom:1px solid var(--l);position:sticky;top:0;align-items:center;flex-wrap:wrap;z-index:5}nav h3{flex:1;min-width:120px}nav button{background:#fff;color:var(--m);box-shadow:none}nav button.on{background:var(--k);color:#fff}
+.w{max-width:920px;margin:auto;padding:14px}h3.s{margin:20px 0 6px}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}.k .c big{display:block;font-size:30px;font-weight:900;margin-top:4px}
+.c{background:#fff;border-radius:16px;padding:14px;margin:8px 0;border:1px solid var(--l);animation:up .45s both}.c.nw{animation:fl 2s}
+.f{display:flex;gap:12px;align-items:center}.f>div:nth-child(2){flex:1}small{color:var(--m)}
+.bar{height:8px;border-radius:4px;background:var(--r);margin-top:8px;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.t{padding:2px 10px;border-radius:99px;color:#fff;font-size:12px;font-weight:700;margin-left:6px}
+.es{text-align:center;color:var(--m);padding:30px 0}code{background:var(--b);padding:2px 8px;border-radius:8px;font-size:15px;user-select:all}
 </style></head><body>
-<div id=lg><b>🍔</b><h1>Fast Fax Food</h1><p>管理後台 · 商戶登入</p><input id=u placeholder=帳號><input id=p type=password placeholder=密碼><button onclick=go()>登入</button></div>
+<div id=lg><form onsubmit="return go(event)"><div class=mk>FFF</div><h1>管理後台</h1><p>平台管理員及商戶登入</p><input id=u placeholder=帳號 autocomplete=username><input id=p type=password placeholder=密碼 autocomplete=current-password><button class=rd>登入</button></form></div>
 <div id=ap hidden></div>
 <script type=module>
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getFirestore,collection,addDoc,updateDoc,deleteDoc,doc,onSnapshot} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore,collection,addDoc,updateDoc,deleteDoc,doc,onSnapshot,arrayUnion,arrayRemove,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const db=getFirestore(initializeApp({apiKey:"AIzaSyDE5ph-uHazh6m0Q4ENeGirLHEI59Cpfhw",authDomain:"uspp1-cd038.firebaseapp.com",projectId:"uspp1-cd038",storageBucket:"uspp1-cd038.firebasestorage.app",messagingSenderId:"118206137592",appId:"1:118206137592:web:00879c764b12eb2e25270d"}));
-const $=i=>document.getElementById(i),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),
-SL={new:"新訂單",preparing:"製作中",ready:"待騎手",delivering:"配送中",done:"已完成"},rnd=()=>Math.random().toString(36).slice(2,8);
-let U,M=[],R=[],O=[],tab="s",an=0;
-const sub=(n,f)=>onSnapshot(collection(db,n),s=>{f(s.docs.map(d=>({id:d.id,...d.data()})));U&&draw()});
-sub("merchants",x=>M=x);sub("riders",x=>R=x);sub("orders",x=>O=x.sort((a,b)=>(b.t?.seconds||0)-(a.t?.seconds||0)));
-window.go=()=>{const u=$("u").value.trim(),p=$("p").value;
-if(u=="P001"&&p=="P001"){U={a:1};tab="s"}else{const m=M.find(x=>x.status=="active"&&x.user==u&&x.pass==p);if(!m)return alert("帳號或密碼錯誤");U={mid:m.id};tab="o"}
-$("lg").hidden=1;$("ap").hidden=0;an=1;draw()};
-window.sw=t=>{tab=t;an=1;draw()};
+const $=i=>document.getElementById(i),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),F=10,P={},
+SL={new:"新訂單",preparing:"製作中",ready:"待騎手",delivering:"配送中",done:"已完成"},C={new:"#e63946",preparing:"#f59e0b",ready:"#3b82f6",delivering:"#8b5cf6",done:"#16a34a"},
+rnd=()=>Math.random().toString(36).slice(2,8),hue=s=>[...String(s)].reduce((a,c)=>a+c.charCodeAt(0)*7,0)%360,
+av=(n,z=44)=>`<div class=av style="width:${z}px;height:${z}px;font-size:${z/2.3}px;background:linear-gradient(135deg,hsl(${hue(n)} 65% 52%),hsl(${hue(n)+40} 65% 40%))">${esc([...String(n)][0]||"?")}</div>`,
+toast=t=>{const d=document.createElement("div");d.className="toast";d.textContent=t;document.body.append(d);setTimeout(()=>d.remove(),3300)},
+beep=()=>{try{const c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.setValueAtTime(.2,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.4);o.start();o.stop(c.currentTime+.4)}catch{}},
+anim=()=>{document.querySelectorAll("[data-n]").forEach(e=>{const k=e.dataset.k,n=+e.dataset.n,f0=P[k]??0,t0=performance.now();P[k]=n;const f=t=>{const x=Math.min(1,(t-t0)/800);e.textContent=Math.round(f0+(n-f0)*x);x<1&&requestAnimationFrame(f)};requestAnimationFrame(f)});
+requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll("[data-w]").forEach(e=>{P[e.dataset.k]=+e.dataset.w;e.style.width=e.dataset.w+"%"})))},
+modal=h=>{const d=document.createElement("div");d.className="md";d.innerHTML=`<div>${h}</div>`;d.onclick=e=>e.target==d&&d.remove();document.body.append(d);return d},
+ask=(t,f,cb)=>{const d=modal(`<h3 style="margin-bottom:12px">${t}</h3>${f.map(x=>`<label>${x[1]}<input name="${x[0]}" ${x[2]||""}></label>`).join("")}<div class=row><button class=g2 data-x>取消</button><button class=rd data-o>確定</button></div>`);
+d.querySelector("[data-x]").onclick=()=>d.remove();d.querySelector("[data-o]").onclick=async()=>{const v={};d.querySelectorAll("input").forEach(i=>v[i.name]=i.value.trim());if(await cb(v)!==false)d.remove()}},
+cred=(t,u,p)=>{const d=modal(`<h3>${t}</h3><p style="margin:12px 0">帳號 <code>${u}</code><br><br>密碼 <code>${p}</code></p><small>請立即抄下,並轉交給對方。</small><div class=row><button class=rd data-x>完成</button></div>`);d.querySelector("[data-x]").onclick=()=>d.remove()};
+let U=null,M=[],R=[],O=[],tab="s",seen=null,ld=0;
+try{U=JSON.parse(sessionStorage.ffa||"null")}catch{}
+const sub=(n,f)=>onSnapshot(collection(db,n),s=>{f(s.docs.map(d=>({id:d.id,...d.data()})));ld=1;U&&draw()});
+sub("merchants",x=>M=x);sub("riders",x=>R=x);
+sub("orders",x=>{O=x.sort((a,b)=>(b.t?.seconds||9e9)-(a.t?.seconds||9e9));if(seen&&U){const n=O.filter(o=>!seen.has(o.id)&&o.status=="new"&&(U.a||o.mid==U.mid));if(n.length){toast("收到新訂單");beep();n.forEach(o=>fresh.add(o.id))}}seen=new Set(O.map(o=>o.id))});
+const fresh=new Set();
+const enter=()=>{$("lg").hidden=1;$("ap").hidden=0;tab=U.a?"s":"o";draw()};
+window.go=e=>{e.preventDefault();if(!ld)return toast("載入中,請稍候"),false;const u=$("u").value.trim(),p=$("p").value;
+if(u=="P001"&&p=="P001")U={a:1};else{const m=M.find(x=>x.status=="active"&&x.user==u&&x.pass==p);if(!m)return toast("帳號或密碼錯誤"),false;U={mid:m.id}}
+sessionStorage.ffa=JSON.stringify(U);enter();return false};
+window.out=()=>{sessionStorage.removeItem("ffa");location.reload()};
+window.sw=t=>{tab=t;draw()};
 window.st=(id,s)=>updateDoc(doc(db,"orders",id),{status:s});
-window.ok=async id=>{const u="M"+Math.floor(1000+Math.random()*9000),p=rnd();await updateDoc(doc(db,"merchants",id),{status:"active",user:u,pass:p});alert(`已批准\n帳號:${u}\n密碼:${p}`)};
-window.rm=id=>confirm("確定刪除?")&&deleteDoc(doc(db,"merchants",id));
-window.rr=id=>confirm("確定刪除?")&&deleteDoc(doc(db,"riders",id));
-window.ar=async()=>{const n=prompt("騎手姓名");if(!n)return;const u="R"+Math.floor(1000+Math.random()*9000),p=rnd();await addDoc(collection(db,"riders"),{name:n,user:u,pass:p});alert(`騎手帳號:${u}\n密碼:${p}`)};
-window.am=()=>{const n=prompt("餐點名稱"),p=+prompt("價錢"),e=prompt("圖示(emoji)")||"🍽️";if(!n||!p)return;const m=M.find(x=>x.id==U.mid);updateDoc(doc(db,"merchants",m.id),{menu:[...m.menu,{n,p,e}]})};
-window.dm=i=>{const m=M.find(x=>x.id==U.mid);updateDoc(doc(db,"merchants",m.id),{menu:m.menu.filter((_,j)=>j!=i)})};
-const oc=(o,b)=>`<div class=c><b>${esc(o.mn)}</b> <span class=t>${SL[o.status]}</span> $${o.total}<br><small>${o.items.map(i=>esc(i.n)+"×"+i.q).join("、")} · ${esc(o.cn)} ${esc(o.ph)} ${esc(o.ad)}${o.rn?" · 🛵"+esc(o.rn):""}</small><br>${b||""}</div>`;
-function draw(){const ad=U.a,me=M.find(x=>x.id==U.mid),T=ad?[["s","📊 統計"],["m","🏪 商戶"],["r","🛵 騎手"],["o","📦 訂單"]]:[["o","📦 訂單"],["m","📋 菜單"]],os=ad?O:O.filter(o=>o.mid==U.mid),act=M.filter(m=>m.status=="active");
-let h=`<nav><h3>🍔 ${ad?"平台後台":esc(me?.name)}</h3>${T.map(t=>`<button class="${tab==t[0]?"on":""}" onclick="sw('${t[0]}')">${t[1]}</button>`).join("")}</nav><div class=w>`;
-if(tab=="s"){const d=O.filter(o=>o.status=="done"),sum=id=>d.filter(o=>o.mid==id).reduce((a,o)=>a+o.total,0),mx=Math.max(1,...act.map(m=>sum(m.id)));
-h+=`<div class=k>${[["總收入 $",d.reduce((a,o)=>a+o.total,0)],["完成訂單",d.length],["進行中",O.length-d.length],["商戶",act.length],["騎手",R.length]].map(c=>`<div class=c>${c[0]}<big data-n=${c[1]}>0</big></div>`).join("")}</div><h3 style="margin-top:14px">商戶營收</h3>`+act.map(m=>`<div class=c>${m.e} ${esc(m.name)} · $${sum(m.id)}<div class=bar data-w=${sum(m.id)/mx*100}></div></div>`).join("")}
-if(tab=="m"&&ad){const pe=M.filter(m=>m.status=="pending");h+=`<h3>待審批 (${pe.length})</h3>`+pe.map(m=>`<div class=c>${m.e} ${esc(m.name)} · ${esc(m.ph)}<br><button onclick="ok('${m.id}')">批准並發出帳號</button><button onclick="rm('${m.id}')">拒絕</button></div>`).join("")+`<h3 style="margin-top:14px">已入駐</h3>`+act.map(m=>`<div class=c>${m.e} ${esc(m.name)}<br><small>帳號 ${m.user} · 密碼 ${m.pass}</small><br><button onclick="rm('${m.id}')">移除</button></div>`).join("")}
-if(tab=="m"&&!ad)h+=`<button onclick=am()>+ 新增餐點</button>`+me.menu.map((x,i)=>`<div class=c>${esc(x.e)} ${esc(x.n)} · $${x.p} <button onclick="dm(${i})">刪除</button></div>`).join("");
-if(tab=="r")h+=`<button onclick=ar()>+ 新增騎手</button>`+R.map(r=>{const n=O.filter(o=>o.rid==r.id&&o.status=="done").length;return `<div class=c>🛵 ${esc(r.name)} · 完成 ${n} 單<br><small>帳號 ${r.user} · 密碼 ${r.pass}</small><br><button onclick="rr('${r.id}')">移除</button></div>`}).join("");
-if(tab=="o")h+=os.map(o=>oc(o,ad?"":o.status=="new"?`<button onclick="st('${o.id}','preparing')">接單製作</button>`:o.status=="preparing"?`<button onclick="st('${o.id}','ready')">出餐完成</button>`:"")).join("")||"<p>暫時沒有訂單</p>";
-$("ap").innerHTML=h+"</div>";
-if(an){an=0;document.querySelectorAll("[data-n]").forEach(e=>{const n=+e.dataset.n,t0=performance.now(),f=t=>{const k=Math.min(1,(t-t0)/900);e.textContent=Math.round(n*k);k<1&&requestAnimationFrame(f)};requestAnimationFrame(f)});
-setTimeout(()=>document.querySelectorAll("[data-w]").forEach(e=>e.style.width=e.dataset.w+"%"),50)}}
+window.ok=async id=>{const u="M"+Math.floor(1000+Math.random()*9000),p=rnd();await updateDoc(doc(db,"merchants",id),{status:"active",user:u,pass:p});cred("已批准入駐",u,p)};
+window.rm=id=>confirm("確定移除這間商戶?")&&deleteDoc(doc(db,"merchants",id));
+window.rr=id=>confirm("確定移除這位騎手?")&&deleteDoc(doc(db,"riders",id));
+window.ar=()=>ask("新增騎手",[["n","騎手姓名"]],async v=>{if(!v.n){toast("請輸入姓名");return false}const u="R"+Math.floor(1000+Math.random()*9000),p=rnd();await addDoc(collection(db,"riders"),{name:v.n,user:u,pass:p});cred("騎手帳號已建立",u,p)});
+window.am=()=>ask("新增餐點",[["n","餐點名稱"],["p","價錢 (HKD)","type=number min=1 step=1"]],async v=>{const p=+v.p;if(!v.n||!(p>0)){toast("請輸入名稱及大於 0 的價錢");return false}await updateDoc(doc(db,"merchants",U.mid),{menu:arrayUnion({n:v.n,p})});toast("已新增")});
+window.dm=i=>{const m=M.find(x=>x.id==U.mid);confirm("刪除「"+m.menu[i].n+"」?")&&updateDoc(doc(db,"merchants",m.id),{menu:arrayRemove(m.menu[i])})};
+const oc=(o,b,i)=>`<div class="c ${fresh.delete(o.id)?"nw":""}" style="animation-delay:${Math.min(i,8)*.04}s"><b>${esc(o.mn)}</b><span class=t style="background:${C[o.status]}">${SL[o.status]||o.status}</span><span style="float:right;font-weight:800">$${o.total}</span><br><small>#${o.id.slice(0,5).toUpperCase()} · ${o.items.map(x=>esc(x.n)+" × "+x.q).join("、")}<br>${esc(o.cn)} · ${esc(o.ph)} · ${esc(o.ad)}${o.rn?" · 騎手 "+esc(o.rn):""}</small>${b?`<div style="margin-top:8px">${b}</div>`:""}</div>`;
+function draw(){const ad=U.a,me=M.find(x=>x.id==U.mid);if(!ad&&!me&&ld)return out();if(!ad&&!me)return;
+const T=ad?[["s","統計"],["m","商戶"],["r","騎手"],["o","訂單"]]:[["o","訂單"],["m","菜單"]],os=ad?O:O.filter(o=>o.mid==U.mid),act=M.filter(m=>m.status=="active"),d=O.filter(o=>o.status=="done");
+let h=`<nav><h3>${ad?"平台後台":esc(me.name)}</h3>${T.map(t=>`<button class="${tab==t[0]?"on":""}" onclick="sw('${t[0]}')">${t[1]}</button>`).join("")}<button onclick=out()>登出</button></nav><div class=w>`;
+if(tab=="s"){const sum=id=>d.filter(o=>o.mid==id).reduce((a,o)=>a+o.total-F,0),mx=Math.max(1,...act.map(m=>sum(m.id)));
+h+=`<div class=k>${[["成交總額 $",d.reduce((a,o)=>a+o.total,0),"gmv"],["完成訂單",d.length,"d"],["進行中",O.length-d.length,"p"],["商戶",act.length,"m"],["騎手",R.length,"r"]].map(c=>`<div class=c>${c[0]}<big data-n=${c[1]} data-k=${c[2]}>0</big></div>`).join("")}</div><h3 class=s>商戶營收(不含運費)</h3>`+(act.map(m=>`<div class=c><div class=f>${av(m.name,36)}<div>${esc(m.name)}</div><b>$${sum(m.id)}</b></div><div class=bar data-k="b${m.id}" data-w=${sum(m.id)/mx*100} style="width:${P["b"+m.id]||0}%"></div></div>`).join("")||`<div class=es>尚未有商戶</div>`)}
+if(tab=="m"&&ad){const pe=M.filter(m=>m.status=="pending");h+=`<h3 class=s>待審批 (${pe.length})</h3>`+(pe.map(m=>`<div class=c><div class=f>${av(m.name)}<div><b>${esc(m.name)}</b><br><small>${esc(m.ph)}</small></div><div><button class=rd onclick="ok('${m.id}')">批准</button><button class=g2 onclick="rm('${m.id}')">拒絕</button></div></div></div>`).join("")||`<div class=es>沒有待審批申請</div>`)+`<h3 class=s>已入駐 (${act.length})</h3>`+act.map(m=>`<div class=c><div class=f>${av(m.name)}<div><b>${esc(m.name)}</b><br><small>帳號 ${esc(m.user)} · 密碼 ${esc(m.pass)} · ${m.menu.length} 款餐點</small></div><button class=g2 onclick="rm('${m.id}')">移除</button></div></div>`).join("")}
+if(tab=="m"&&!ad)h+=`<button class=rd onclick=am()>新增餐點</button>`+(me.menu.map((x,i)=>`<div class=c><div class=f>${av(x.n)}<div><b>${esc(x.n)}</b><br><small>$${x.p}</small></div><button class=g2 onclick="dm(${i})">刪除</button></div></div>`).join("")||`<div class=es>還沒有餐點,新增第一款吧</div>`);
+if(tab=="r")h+=`<button class=rd onclick=ar()>新增騎手</button>`+(R.map(r=>{const n=O.filter(o=>o.rid==r.id&&o.status=="done").length;return `<div class=c><div class=f>${av(r.name)}<div><b>${esc(r.name)}</b> · 完成 ${n} 單<br><small>帳號 ${esc(r.user)} · 密碼 ${esc(r.pass)}</small></div><button class=g2 onclick="rr('${r.id}')">移除</button></div></div>`}).join("")||`<div class=es>還沒有騎手</div>`);
+if(tab=="o")h+=os.map((o,i)=>oc(o,ad?"":o.status=="new"?`<button class=rd onclick="st('${o.id}','preparing')">接單製作</button>`:o.status=="preparing"?`<button class=rd onclick="st('${o.id}','ready')">出餐完成</button>`:"",i)).join("")||`<div class=es>暫時沒有訂單</div>`;
+$("ap").innerHTML=h+"</div>";anim()}
+if(U)enter();
 </script></body></html>
